@@ -13,7 +13,22 @@ return new class extends Migration
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('car_id');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->decimal('total_cost', total: 8, places: 2);
+            
+            $table->foreign('user_id')->references('id')->on('users')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->foreign('car_id')->references('id')->on('cars')
+                ->restrictOnDelete()
+                ->cascadeOnUpdate();
+
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrentOnUpdate();
         });
     }
 
