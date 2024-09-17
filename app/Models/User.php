@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class user extends Model
 {
     //use HasFactory;
-    protected $fillable = ['name','email','password','role'];
+    protected $fillable = ['name','email','password','phone','address','role'];
     public function isAdmin(): bool{
         if($this->role=='admin'){
             return true;
