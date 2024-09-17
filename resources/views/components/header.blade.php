@@ -13,7 +13,7 @@
                 <li class="nav-item me-4"><a class="nav-link" href="#">Rentals</a></li>
                 <li class="nav-item me-4"><a class="nav-link" href="#">Contact</a></li>
             </ul>
-            <div><a class="btn mt-3 bg-gradient-primary" href="userlogin.html">Login / Singup</a></div>
+            <div><a class="btn mt-3 bg-gradient-primary" href="/login">Login / Singup</a></div>
         </div>
     </div>
 </nav>

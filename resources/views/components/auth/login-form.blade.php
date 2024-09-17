@@ -1,5 +1,3 @@
-@extends('layout.front-end')
-@section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-7 animated fadeIn col-lg-6 center-screen">
@@ -11,13 +9,11 @@
                     <br/>
                     <input id="password" placeholder="User Password" class="form-control" type="password"/>
                     <br/>
-                    <button onclick="submitLogin()" class="btn w-100 bg-gradient-primary">Next</button>
+                    <button onclick="SubmitLogin()" class="btn w-100 bg-gradient-primary">Next</button>
                     <hr/>
-                    <div class="float-end mt-3">
+                    <div class="float-center mt-3">
                         <span>
-                            <a class="text-center ms-3 h6" href="userRegistration.html">Sign Up </a>
-                            <span class="ms-1">|</span>
-                            <a class="text-center ms-3 h6" href="sendOtp.html">Forget Password</a>
+                            Don't Have an account? Please <a class="text-center ms-3 h6" href="{{url('/userRegistration')}}">Sign Up </a>
                         </span>
                     </div>
                 </div>
@@ -25,8 +21,11 @@
         </div>
     </div>
 </div>
+
+
 <script>
-async function submitLogin() {
+
+  async function SubmitLogin() {
             let email=document.getElementById('email').value;
             let password=document.getElementById('password').value;
 
@@ -39,7 +38,7 @@ async function submitLogin() {
             else{
                 showLoader();
                 let res=await axios.post("/user-login",{email:email, password:password});
-                hideLoader();
+                hideLoader()
                 if(res.status===200 && res.data['status']==='success'){
                     window.location.href="/dashboard";
                 }
@@ -48,5 +47,5 @@ async function submitLogin() {
                 }
             }
     }
+
 </script>
-@endsection
