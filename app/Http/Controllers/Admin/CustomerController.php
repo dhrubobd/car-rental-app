@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Helper\JWTToken;
 use App\Http\Controllers\Controller;
 use App\Models\user;
+use Exception;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -65,18 +66,20 @@ class CustomerController extends Controller
         //
     }
 
-    function UserLogin(Request $request){
+    function userLogin(Request $request){
         $count=User::where('email','=',$request->input('email'))
              ->where('password','=',$request->input('password'))
-             ->select('id')->first();
+             ->select(['id','role'])->first();
  
         if($count!==null){
             // User Login-> JWT Token Issue
             $token=JWTToken::CreateToken($request->input('email'),$count->id);
+            $role = $count->role;
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
-                'token'=>$token
+                'token'=>$token ,
+                'role'=> $role
             ],200)->cookie('token',$token,time()+60*24*30);
         }
         else{
@@ -88,4 +91,32 @@ class CustomerController extends Controller
         }
  
      }
+
+     function userLogout(){
+        return redirect('/')->cookie('token','',-1);
+    }
+
+    function UserRegistration(Request $request){
+        try {
+            User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'password' => $request->input('password'),
+                'role' => "customer"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'User Registration Successfully'
+            ],200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ],200);
+
+        }
+    }
 }

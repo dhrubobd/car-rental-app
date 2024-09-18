@@ -21,10 +21,15 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('page.auth.login-page');
 });
+Route::get('/registration', function () {
+    return view('page.auth.registration-page');
+});
 Route::get('/dashboard',function () {
     return view('page.dashboard.index');
 })->middleware([TokenVerificationMiddleware::class]);
 
 //User Routes
-Route::post('/user-login',[CustomerController::class,'UserLogin']);
+Route::post('/user-login',[CustomerController::class,'userLogin']);
+Route::get('/logout',[CustomerController::class,'userLogout']);
+Route::post('/user-registration',[CustomerController::class,'userRegistration']);
 Route::resource('/customer', CustomerController::class);

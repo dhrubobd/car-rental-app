@@ -9,11 +9,11 @@
                     <br/>
                     <input id="password" placeholder="User Password" class="form-control" type="password"/>
                     <br/>
-                    <button onclick="SubmitLogin()" class="btn w-100 bg-gradient-primary">Next</button>
+                    <button onclick="submitLogin()" class="btn w-100 bg-gradient-primary">Next</button>
                     <hr/>
                     <div class="float-center mt-3">
                         <span>
-                            Don't Have an account? Please <a class="text-center ms-3 h6" href="{{url('/userRegistration')}}">Sign Up </a>
+                            Don't Have an account? Please <a class="text-center ms-3 h6" href="{{url('/registration')}}">Sign Up </a>
                         </span>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
 
 <script>
 
-  async function SubmitLogin() {
+  async function submitLogin() {
             let email=document.getElementById('email').value;
             let password=document.getElementById('password').value;
 
@@ -38,9 +38,14 @@
             else{
                 showLoader();
                 let res=await axios.post("/user-login",{email:email, password:password});
-                hideLoader()
+                hideLoader();
                 if(res.status===200 && res.data['status']==='success'){
-                    window.location.href="/dashboard";
+                    if(res.data['role']==='admin'){
+                        window.location.href="/dashboard";
+                    }else{
+                        window.location.href="/cars";
+                    }
+                    
                 }
                 else{
                     errorToast(res.data['message']);
