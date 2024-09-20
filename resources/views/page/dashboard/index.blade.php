@@ -1,4 +1,4 @@
-@extends('layout.back-end')
+@extends('layout.dashboard')
 @section('content')
 <div id="contentRef" class="content">
     <div class="container-fluid">

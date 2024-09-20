@@ -9,11 +9,11 @@
         <div class="collapse navbar-collapse" id="header01">
             <ul class="navbar-nav ms-auto mt-3 mt-lg-0 mb-3 mb-lg-0 me-4">
                 <li class="nav-item me-4"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item me-4"><a class="nav-link" href="#">About</a></li>
+                <li class="nav-item me-4"><a class="nav-link" href="#">Cars</a></li>
                 <li class="nav-item me-4"><a class="nav-link" href="#">Rentals</a></li>
                 <li class="nav-item me-4"><a class="nav-link" href="#">Contact</a></li>
             </ul>
-            <div><a class="btn mt-3 bg-gradient-primary" href="/login">Login / Signup</a></div>
+            <div><a class="btn mt-3 bg-gradient-primary" href="/logout">Logout</a></div>
         </div>
     </div>
 </nav>
