@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    //
     function carList(){
-        //return Car::where('availability',true)->get();
-        return Car::all();
+        return Car::where('availability',true)->get();
+        //return Car::all();
     }
 }

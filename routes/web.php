@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\CarController as AdminCarController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\RentalController as AdminRentalController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\CarController;
+use App\Http\Controllers\Frontend\RentalController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -39,7 +43,7 @@ Route::get('/dashboard',function () {
 Route::post('/user-login',[CustomerController::class,'userLogin']);
 Route::get('/logout',[CustomerController::class,'userLogout']);
 Route::post('/user-registration',[CustomerController::class,'userRegistration']);
-//Route::resource('/customer', CustomerController::class);
 
 //Car Routes
-Route::get('/list-cars',[CarController::class,'carList']);
+Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/book-car',[RentalController::class,'bookCar'])->middleware([TokenVerificationMiddleware::class]);

@@ -1,5 +1,6 @@
 @extends('layout.customer')
 @section('content')
+@include('components.customer.book-car')
 <div class="container my-3">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-lg-12">
@@ -67,20 +68,9 @@
     
         $('.bookBtn').on('click', async function () {
                let id= $(this).data('id');
-               let filePath= $(this).data('path');
-               await FillUpUpdateForm(id,filePath)
-               $("#update-modal").modal('show');
-        })
-    
-        $('.deleteBtn').on('click',function () {
-            let id= $(this).data('id');
-            let path= $(this).data('path');
-    
-            $("#delete-modal").modal('show');
-            $("#deleteID").val(id);
-            $("#deleteFilePath").val(path)
-    
-        })
+               await setupID(id);
+               $("#car-book-modal").modal('show');
+        });
     
         new DataTable('#tableData',{
             order:[[0,'desc']],
