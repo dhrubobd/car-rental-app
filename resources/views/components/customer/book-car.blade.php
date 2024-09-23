@@ -73,7 +73,7 @@ async function bookCar(){
             }
             else{
                 //errorToast(res.data.msg);
-                errorToast('Failed!');
+                errorToast('Request Failed!');
             }
         }
     }

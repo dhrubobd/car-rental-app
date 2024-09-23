@@ -112,7 +112,7 @@
     width: 100% !important;
 }
 .side-bar-item:hover{
-    border-left: 4px solid #CB0C9F;
+    border-left: 4px solid orangered;
     transition: 0.2s;
     background-color: #F3D9EC;
 }
@@ -123,7 +123,7 @@
     color: #363B64;
 }
 .side-bar-item-active{
-    border-left: 4px solid #CB0C9F;
+    border-left: 4px solid orangered;
     background-color:#F3D9EC;
 }
 .side-bar-item-icon{

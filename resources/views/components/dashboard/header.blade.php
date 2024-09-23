@@ -14,13 +14,10 @@
                     <div class="user-dropdown-content ">
                         <div class="mt-4 text-center">
                             <img class="icon-nav-img" src="{{asset('images/user.webp')}}" alt=""/>
-                            <h6>User Name</h6>
+                            <h6>Admin User</h6>
                             <hr class="user-dropdown-divider  p-0"/>
                         </div>
-                        <a href="userProfile.html" class="side-bar-item">
-                            <span class="side-bar-item-caption">Profile</span>
-                        </a>
-                        <a href="index.html" class="side-bar-item">
+                        <a href="{{url("/logout")}}" class="side-bar-item">
                             <span class="side-bar-item-caption">Logout</span>
                         </a>
                     </div>

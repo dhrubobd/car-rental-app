@@ -55,3 +55,16 @@ $(document).ready(function() {
         ]
     });
 });
+
+$(document).ready(function () {
+    var url = window.location;
+    $('ul.navbar-nav a[href="'+ url +'"]').addClass('active');
+    $('ul.navbar-nav a').filter(function() {
+         return this.href == url;
+    }).addClass('active');
+    $('.side-nav-open a[href="'+ url +'"]').addClass('active');
+    $('.side-nav-open a').filter(function() {
+         return this.href == url;
+    }).addClass('active');
+    
+});

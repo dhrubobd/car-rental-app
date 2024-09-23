@@ -58,4 +58,6 @@ a:hover {
 .swal2-styled:focus{
   box-shadow: none !important;
 }
-
+a.active, a.active span {
+  color: orangered !important;
+}

@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\CarController as AdminCarController;
-use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\RentalController as AdminRentalController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\CarController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\RentalController;
+use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +22,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//User Routes
+Route::post('/user-login',[AdminCustomerController::class,'userLogin']);
+Route::get('/logout',[AdminCustomerController::class,'userLogout']);
+Route::post('/user-registration',[AdminCustomerController::class,'userRegistration']);
+
 // Page Routes (Customer)
 Route::get('/', function () {
     return view('page.home');
@@ -39,14 +47,14 @@ Route::get('/manage-bookings', function () {
 })->middleware([TokenVerificationMiddleware::class]);
 
 // Page Routes (Admin)
-Route::get('/dashboard',function () {
-    return view('page.dashboard.index');
-})->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard',[AdminPageController::class,'dashboardView'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard/dashboard-data',[AdminPageController::class,'dashboardData'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard/manage-customers',[AdminPageController::class,'customerView'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard/customer-data',[AdminPageController::class,'customerData'])->middleware([TokenVerificationMiddleware::class]);
 
-//User Routes
-Route::post('/user-login',[CustomerController::class,'userLogin']);
-Route::get('/logout',[CustomerController::class,'userLogout']);
-Route::post('/user-registration',[CustomerController::class,'userRegistration']);
+
+
+
 
 //Car Routes
 Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);
