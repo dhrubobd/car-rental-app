@@ -47,4 +47,18 @@ class RentalController extends Controller
         //return  response()->json(['msg' => "Success", 'data' =>  "Okay"],200);
      
     }
+
+    function bookingList(Request $request){
+        $userID=$request->header('id');
+        return Rental::where('user_id',$userID)->get();
+    }
+
+    function cancelBooking(Request $request){
+        $userID=$request->header('id');
+        $bookingID=$request->input('bookingID');
+        return Rental::where('id',$bookingID)->where('user_id',$userID)
+            ->update([
+                'status'=>'cancelled'
+            ]);
+    }
 }

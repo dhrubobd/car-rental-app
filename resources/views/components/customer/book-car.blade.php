@@ -9,25 +9,16 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-
-
-                                
                                 <label class="form-label mt-2">From</label>
                                 <input type="date" class="form-control" id="formDate">
-
                                 <label class="form-label mt-2">To</label>
                                 <input type="date" class="form-control" id="toDate">
-
                                 <input type="text" class="d-none" id="carID">
-
                             </div>
                         </div>
                     </div>
                 </form>
-
-                <div id="test"></div>
             </div>
-
             <div class="modal-footer">
                 <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 <button onclick="bookCar()" id="update-btn" class="btn bg-gradient-success" >Confirm</button>
@@ -57,17 +48,14 @@ async function bookCar(){
     } else {
         let date1 = new Date(fromDate);
         let date2 = new Date(toDate);
-
         let dateDiffence = date2.getTime() - date1.getTime();
         let bookingDays = Math.round (dateDiffence / (1000 * 3600 * 24));
         if(bookingDays<0){
             errorToast("To Date Can't Be less than From Date.");
-        } else {
-            
-            if(bookingDays==0){
-                bookingDays=bookingDays+1;
-            }
-
+        } 
+        else 
+        {
+            bookingDays=bookingDays+1;
             let carID=document.getElementById('carID').value;
             let formData=new FormData();
             formData.append('carID',carID);
@@ -75,16 +63,17 @@ async function bookCar(){
             formData.append('toDate',toDate);
             formData.append('bookingDays',bookingDays);
             showLoader();
-            debugger;
+            //debugger;
             let res = await axios.post("/book-car",formData);
-            console.info(res);
+            //console.info(res);
             hideLoader();
             if(res.status===201){
                 successToast('Request completed');
-                //window.location.href="/manage-booking";
+                window.location.href="/manage-bookings";
             }
             else{
-                errorToast(res.data.msg);
+                //errorToast(res.data.msg);
+                errorToast('Failed!');
             }
         }
     }

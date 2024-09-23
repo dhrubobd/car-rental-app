@@ -34,6 +34,10 @@ Route::get('/cars', function () {
     return view('page.customer.cars');
 })->middleware([TokenVerificationMiddleware::class]);
 
+Route::get('/manage-bookings', function () {
+    return view('page.customer.manage-bookings');
+})->middleware([TokenVerificationMiddleware::class]);
+
 // Page Routes (Admin)
 Route::get('/dashboard',function () {
     return view('page.dashboard.index');
@@ -46,4 +50,8 @@ Route::post('/user-registration',[CustomerController::class,'userRegistration'])
 
 //Car Routes
 Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);
+
+//Rental Routes
 Route::post('/book-car',[RentalController::class,'bookCar'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/list-bookings',[RentalController::class,'bookingList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/cancel-booking',[RentalController::class,'cancelBooking'])->middleware([TokenVerificationMiddleware::class]);
