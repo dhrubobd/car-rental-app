@@ -44,7 +44,8 @@ async function cancelBooking(){
             hideLoader();
             if(res.status===200 && res.data===1){
                 successToast('Request completed');
-                window.location.href="/manage-bookings";
+                //window.location.href="/manage-bookings";
+                await getList();
             }
             else{
                 errorToast('Failed');

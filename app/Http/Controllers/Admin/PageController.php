@@ -8,6 +8,7 @@ use App\Models\car;
 use App\Models\rental;
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -50,5 +51,11 @@ class PageController extends Controller
         }else{
             return view('page.auth.login-page');
         }
+    }
+    function customerData(){
+        //return User::select('rentals.*')->join('rentals', 'rentals.user_id', '=', 'users.id')->where('users.role','customer')->where('rentals.status','completed')->get();
+        //return Rental::select('users.*')->join('users', 'users.id', '=', 'rentals.user_id')->where('users.role','customer')->where('rentals.status','completed')->get();
+        return User::where('role','customer')->get();
+        
     }
 }

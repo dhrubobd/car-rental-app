@@ -53,7 +53,12 @@ Route::get('/dashboard/manage-customers',[AdminPageController::class,'customerVi
 Route::get('/dashboard/customer-data',[AdminPageController::class,'customerData'])->middleware([TokenVerificationMiddleware::class]);
 
 
-
+// User  / Customer Routes (Admin)
+Route::post('/dashboard/create-customer',[AdminCustomerController::class,'createCustomer'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/delete-customer',[AdminCustomerController::class,'deleteCustomer'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/update-customer',[AdminCustomerController::class,'updateCustomer'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/customer-by-id',[AdminCustomerController::class,'customerByID'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/customer-rentals',[AdminCustomerController::class,'customerRentals'])->middleware([TokenVerificationMiddleware::class]);
 
 
 //Car Routes
