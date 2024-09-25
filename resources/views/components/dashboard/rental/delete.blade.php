@@ -24,10 +24,10 @@
             let deleteFilePath=document.getElementById('deleteFilePath').value;
             document.getElementById('delete-modal-close').click();
             showLoader();
-            let res=await axios.post("/dashboard/delete-customer",{id:id,file_path:deleteFilePath})
+            let res=await axios.post("/dashboard/delete-rental",{id:id,file_path:deleteFilePath})
             hideLoader();
             if(res.data===1){
-                successToast("The User is Deleted.")
+                successToast("Rental is Deleted.")
                 await getList();
             }
             else{

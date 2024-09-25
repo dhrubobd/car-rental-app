@@ -17,11 +17,11 @@ class user extends Model
             return false;
         }
     }
-    public function isCustomer(): bool{
-        if($this->role=='admin'){
-            return false;
-        }else{
+    function isCustomer(): bool{
+        if($this->role=='customer'){
             return true;
+        }else{
+            return false;
         }
     }
     public function rentals():HasMany{
