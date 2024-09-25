@@ -102,7 +102,7 @@
     
     
         showLoader();
-        let res=await axios.get("/dashboard/dashboard-data");
+        let res=await axios.post("/dashboard/dashboard-data");
 
         let totalCars=$("#totalCars");
         let availableCars=$("#availableCars");

@@ -50,23 +50,32 @@ Route::get('/manage-bookings', function () {
 
 // Page Routes (Admin)
 Route::get('/dashboard',[AdminPageController::class,'dashboardView'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/dashboard/dashboard-data',[AdminPageController::class,'dashboardData'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/dashboard/manage-customers',[AdminPageController::class,'customerView'])->middleware([TokenVerificationMiddleware::class]);
-Route::get('/dashboard/customer-data',[AdminPageController::class,'customerData'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard/manage-customers',[AdminPageController::class,'manageCustomers'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/dashboard/manage-cars',[AdminPageController::class,'manageCars'])->middleware([TokenVerificationMiddleware::class]);
+
+// API Routes Used for Pages (Admin)
+Route::post('/dashboard/dashboard-data',[AdminPageController::class,'dashboardData'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/customer-data',[AdminPageController::class,'customerData'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/car-data',[AdminPageController::class,'carData'])->middleware([TokenVerificationMiddleware::class]);
 
 
-// User  / Customer Routes (Admin)
+// User or Customer Management Routes (Admin)
 Route::post('/dashboard/create-customer',[AdminCustomerController::class,'createCustomer'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/delete-customer',[AdminCustomerController::class,'deleteCustomer'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/update-customer',[AdminCustomerController::class,'updateCustomer'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/customer-by-id',[AdminCustomerController::class,'customerByID'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/customer-rentals',[AdminCustomerController::class,'customerRentals'])->middleware([TokenVerificationMiddleware::class]);
 
+// Car Management Routes (Admin)
+Route::post('/dashboard/create-car',[AdminCarController::class,'createCar'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/delete-car',[AdminCarController::class,'deleteCar'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/car-by-id',[AdminCarController::class,'carByID'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/update-car',[AdminCarController::class,'updateCar'])->middleware([TokenVerificationMiddleware::class]);
 
-//Car Routes
+//User or Customer Car Routes (Frontend)
 Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);
 
-//Rental Routes
+//User or Customer Rental Routes (Frontend)
 Route::post('/book-car',[RentalController::class,'bookCar'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-bookings',[RentalController::class,'bookingList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/cancel-booking',[RentalController::class,'cancelBooking'])->middleware([TokenVerificationMiddleware::class]);

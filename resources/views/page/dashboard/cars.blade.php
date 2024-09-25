@@ -1,9 +1,8 @@
 @extends('layout.dashboard')
 @section('content')
-@include('components.dashboard.customer.create')
-@include('components.dashboard.customer.delete')
-@include('components.dashboard.customer.update')
-@include('components.dashboard.customer.rental')
+@include('components.dashboard.car.create')
+@include('components.dashboard.car.delete')
+@include('components.dashboard.car.update')
 <div id="contentRef" class="content">
     <div class="container-fluid">
         <div class="row">
@@ -11,7 +10,7 @@
                 <div class="card px-5 py-5">
                     <div class="row justify-content-between ">
                         <div class="align-items-center col">
-                            <h4>Customer Management</h4>
+                            <h4>Car Management</h4>
                         </div>
                         <div class="align-items-center col">
                             <button data-bs-toggle="modal" data-bs-target="#create-modal" class="float-end btn m-0  bg-gradient-primary">Create</button>
@@ -22,10 +21,10 @@
                         <table class="table" id="tableData">
                             <thead>
                             <tr class="bg-light">
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Address</th>
+                                <th>Car Photo</th>
+                                <th>Car Details</th>
+                                <th>Rent Price</th>
+                                <th>Availability Status</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -48,9 +47,9 @@ getList();
     
     
         showLoader();
-        //debugger;
-        let res=await axios.post("/dashboard/customer-data");
-        //console.info(res);
+        debugger;
+        let res=await axios.post("/dashboard/car-data");
+        console.info(res);
         hideLoader();
 
         let tableList=$("#tableList");
@@ -58,17 +57,27 @@ getList();
         
         tableData.DataTable().destroy();
         tableList.empty();
-        
+        let availabilityStatus = "";
         res.data.forEach(function (item,index) {
+            if(item['availability']==true){
+                availabilityStatus = "Available";
+            }else{
+                availabilityStatus = "Not Available";
+            }
             let row=`<tr>
-                        <td>${item['name']}</td>
-                        <td>${item['email']}</td>
-                        <td>${item['phone']}</td>
-                        <td>${item['address']}</td>
+                        <td><img class="w-50 h-auto" alt="" src="../${item['image']}"></td>
                         <td>
-                            <button data-path="" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
-                            <button data-path="" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
-                            <button data-path="" data-id="${item['id']}" class="btn rentalHistoryBtn btn-sm btn-outline-info">Rental History</button>
+                            <strong>Car Name:</strong> ${item['name']} <br/>
+                            <strong>Brand:</strong> ${item['brand']}<br/>
+                            <strong>Model:</strong> ${item['model']}<br/>
+                            <strong>Year of Manufacture:</strong> ${item['year']}<br/>
+                            <strong>Car Type:</strong> ${item['car_type']}
+                        </td>
+                        <td>${item['daily_rent_price']}</td>
+                        <td>${availabilityStatus}</td>
+                        <td>
+                            <button data-path="${item['image']}" data-id="${item['id']}" class="btn editBtn btn-sm btn-outline-success">Edit</button>
+                            <button data-path="${item['image']}" data-id="${item['id']}" class="btn deleteBtn btn-sm btn-outline-danger">Delete</button>
                         </td>
                      </tr>`;
             tableList.append(row);
@@ -76,26 +85,19 @@ getList();
     
         $('.editBtn').on('click', async function () {
            let id= $(this).data('id');
-           await FillUpUpdateForm(id)
-           $("#update-modal").modal('show');
+           let imagePath= $(this).data('path');
+           await FillUpUpdateForm(id,imagePath)
+           $("#car-update-modal").modal('show');
         })
 
         $('.deleteBtn').on('click',function () {
             let id= $(this).data('id');
-            let path= $(this).data('path');
-
+            let imagePath = $(this).data('path');
             $("#delete-modal").modal('show');
             $("#deleteID").val(id);
-            $("#deleteFilePath").val(path)
+            $("#deleteFilePath").val(imagePath)
 
         })
-
-        $('.rentalHistoryBtn').on('click', async function () {
-           let id= $(this).data('id');
-           await showRentalDetails(id)
-           $("#rental-modal").modal('show');
-        })
-    
         new DataTable('#tableData',{
             order:[[0,'desc']],
             lengthMenu: [10, 25, 50, 75, 100]

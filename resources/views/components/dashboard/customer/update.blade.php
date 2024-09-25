@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Customer Info</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update The Customer Info</h5>
             </div>
             <div class="modal-body">
                 <form id="update-form">
