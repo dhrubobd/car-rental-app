@@ -18,7 +18,7 @@
             </div>
 
             <div class="modal-footer">
-                <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                <button id="cancel-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 <button onclick="cancelBooking()" id="update-btn" class="btn bg-gradient-success" >Confirm</button>
             </div>
 
@@ -45,6 +45,7 @@ async function cancelBooking(){
             if(res.status===200 && res.data===1){
                 successToast('Request completed');
                 //window.location.href="/manage-bookings";
+                document.getElementById('cancel-modal-close').click();
                 await getList();
             }
             else{

@@ -54,22 +54,38 @@
         res.data.forEach(function (item,index) {
             if(item['status']=="ongoing"){
                 status = "<div class='text-warning bg-dark'>Please make payment within 24 hours to confirm the rental.</div>";
-            }else if(item['status']=="completed"){
-                status = "<div class='text-success'>You completed the payment. Have a nice trip!</div>";
-            }else{
-                status = "<div class='text-danger'>The booking is cancelled.</div>";
-            }
-            let row=`<tr>
+                let row=`<tr>
                         <td>${item['id']}</td>
                         <td>${item['start_date']}</td>
                         <td>${item['end_date']}</td>
                         <td>${item['total_cost']}</td>
                         <td>${status}</td>
-                        <td>   
-                             <button data-path="" data-id="${item['id']}" class="btn cancelBtn btn-sm btn-outline-danger">Cancel Booking</button>    
-                        </td>
+                        <td><button data-path="" data-id="${item['id']}" class="btn cancelBtn btn-sm btn-outline-danger">Cancel Booking</button></td>
                        </tr>`;
-            tableList.append(row);
+                tableList.append(row);
+            }else if(item['status']=="completed"){
+                status = "<div class='text-success'>You completed the payment. Have a nice trip!</div>";
+                let row=`<tr>
+                        <td>${item['id']}</td>
+                        <td>${item['start_date']}</td>
+                        <td>${item['end_date']}</td>
+                        <td>${item['total_cost']}</td>
+                        <td>${status}</td>
+                        <td></td>
+                       </tr>`;
+                tableList.append(row);
+            }else{
+                status = "<div class='text-danger'>The booking is cancelled.</div>";
+                let row=`<tr>
+                        <td>${item['id']}</td>
+                        <td>${item['start_date']}</td>
+                        <td>${item['end_date']}</td>
+                        <td>${item['total_cost']}</td>
+                        <td>${status}</td>
+                        <td></td>
+                       </tr>`;
+                tableList.append(row);
+            }
         })
     
         $('.cancelBtn').on('click', async function () {
