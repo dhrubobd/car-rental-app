@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CarRentalMail;
 use App\Models\car;
 use App\Models\rental;
+use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class RentalController extends Controller
 {
@@ -33,7 +36,20 @@ class RentalController extends Controller
             $dailyRent = $theCar->daily_rent_price;
             
             $totalCost = $bookingDays * $dailyRent;
-            
+        
+            try {
+                $theCustomer = User::where('id',$userID)->first();
+                $customerEmail = $theCustomer->email;
+                $customerName = $theCustomer->name;
+                $carName = $theCar->name;
+
+                Mail::to($customerEmail)->send(new CarRentalMail($customerName, $carName, $startDate, $endDate,$totalCost));
+            } catch (\Throwable $th) {
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Email could not be sent.'
+                ],200);
+            }
            return Rental::create([
                 'user_id'=>$userID,
                 'car_id'=>$carID,
