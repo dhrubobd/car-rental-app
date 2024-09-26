@@ -43,7 +43,7 @@
 </div>
 <script>
 
-getList();
+    getList();
     
     
     async function getList() {
@@ -81,6 +81,12 @@ getList();
             tableRentalList.append(row);
         })
         $('.createBtn').on('click', async function () {
+            $("#rentalCustomerID").find("option").remove();
+            $("#rentalCarID").find("option").remove();
+            let option=`<option value="">Choose A Car</option>`;
+            $("#rentalCustomerID").append(option);
+            option=`<option value="">Choose A Car</option>`;
+            $("#rentalCarID").append(option);
             await fillUpRentalDropdowns();
         })
         $('.editBtn').on('click', async function () {
@@ -110,6 +116,28 @@ getList();
             lengthMenu: [10, 25, 50, 75, 100]
         });
     
+    }
+
+    async function fillUpRentalDropdowns(){
+        $("#rentalCustomerID").find("option").remove();
+        $("#rentalCarID").find("option").remove();
+
+        let option=`<option value="">Choose A Car</option>`;
+        $("#rentalCustomerID").append(option);
+        option=`<option value="">Choose A Car</option>`;
+        $("#rentalCarID").append(option);
+
+        let res = await axios.post("/dashboard/list-customer");
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}</option>`
+            $("#rentalCustomerID").append(option);
+        })
+        
+        let res2 = await axios.post("/dashboard/list-available-car");
+        res2.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}  - ${item['brand']} - ${item['car_type']}</option>`
+            $("#rentalCarID").append(option);
+        })
     }
     
     

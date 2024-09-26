@@ -11,17 +11,15 @@
                             <div class="col-12 p-1">
 
                                 <label class="form-label mt-2">Customer Name</label>
-                                <select type="text" class="form-control form-select" id="rentalCustomerName">
-                                    <option value="">Choose A Castomer</option>
+                                <select type="text" class="form-control form-select" id="rentalCustomerID">
                                 </select>
 
                                 <label class="form-label mt-2">Car Details</label>
-                                <select type="text" class="form-control form-select" id="rentalCarName">
-                                    <option value="">Choose A Car</option>
+                                <select type="text" class="form-control form-select" id="rentalCarID">
                                 </select>
 
                                 <label class="form-label mt-2">Start Date</label>
-                                <input type="date" class="form-control" id="formDate">
+                                <input type="date" class="form-control" id="fromDate">
 
                                 <label class="form-label mt-2">End Date</label>
                                 <input type="date" class="form-control" id="toDate">
@@ -32,7 +30,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="modal-close" class="btn bg-gradient-primary mx-2" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    <button onclick="saveRental()" id="save-btn" class="btn bg-gradient-success" >Save</button>
+                    <button onclick="createRental()" id="save-btn" class="btn bg-gradient-success" >Save</button>
                 </div>
             </div>
     </div>
@@ -41,67 +39,61 @@
 
 <script>
 
-    async function fillUpRentalDropdowns(){
-        let res = await axios.post("/dashboard/list-customer");
-        res.data.forEach(function (item,i) {
-            let option=`<option value="${item['id']}">${item['name']}</option>`
-            $("#rentalCustomerName").append(option);
-        })
-        let res2 = await axios.post("/dashboard/list-available-car");
-        res2.data.forEach(function (item,i) {
-            let option=`<option value="${item['id']}">${item['name']}  - ${item['brand']} - ${item['car_type']}</option>`
-            $("#rentalCarName").append(option);
-        })
-    }
+    async function createRental() {
 
-    async function saveRental() {
-
-        let customerName = document.getElementById('customerName').value;
-        let customerEmail = document.getElementById('customerEmail').value;
-        let customerPhone = document.getElementById('customerPhone').value;
-        let customerAddress = document.getElementById('customerAddress').value;
-        let customerPassword = document.getElementById('customerPassword').value;
-
-        if (customerName.length === 0) {
-            errorToast("Name is Required !")
+        let rentalCustomerID = document.getElementById('rentalCustomerID').value;
+        let rentalCarID = document.getElementById('rentalCarID').value;
+        let fromDate = document.getElementById('fromDate').value;
+        let toDate = document.getElementById('toDate').value;
+        
+        if (rentalCustomerID.length === 0) {
+            errorToast("Please Select A Customer !")
         }
-        else if(customerEmail.length===0){
-            errorToast("Email is Required !")
+        else if(rentalCarID.length===0){
+            errorToast("Please Select A Car !")
         }
-        else if(customerPhone.length===0){
-            errorToast("Phone Number is Required !")
+        else if(fromDate.length===0){
+            errorToast("Please Select A Starting Date !")
         }
-        else if(customerAddress.length===0){
-            errorToast("Address is Required !")
+        else if(toDate.length===0){
+            errorToast("Please Select A Ending Date !")
         }
-        else if(customerPassword.length===0){
-            errorToast("Password is Required !")
-        }
-
         else {
+            
+            let date1 = new Date(fromDate);
+            let date2 = new Date(toDate);
+            let dateDifference = date2.getTime() - date1.getTime();
+            let bookingDays = Math.round (dateDifference / (1000 * 3600 * 24));
 
-            document.getElementById('modal-close').click();
+            if(bookingDays<0){
+                errorToast("To Date Can't Be less than From Date.");
+            } 
+            else 
+            {
+                
+                document.getElementById('modal-close').click();
+                bookingDays = bookingDays + 1;
+                let formData=new FormData();
+                formData.append('customerID',rentalCustomerID)
+                formData.append('carID',rentalCarID)
+                formData.append('fromDate',fromDate)
+                formData.append('toDate',toDate)
+                formData.append('bookingDays',bookingDays)
 
-            let formData=new FormData();
-            formData.append('customerName',customerName)
-            formData.append('customerEmail',customerEmail)
-            formData.append('customerPhone',customerPhone)
-            formData.append('customerAddress',customerAddress)
-            formData.append('customerPassword',customerPassword)
+                showLoader();
+                //debugger;
+                let res = await axios.post("/dashboard/create-rental",formData);
+                //console.info(res);
+                hideLoader();
 
-            showLoader();
-            //debugger;
-            let res = await axios.post("/dashboard/create-customer",formData);
-            //console.info(res);
-            hideLoader();
-
-            if(res.status===201){
-                successToast('Customer Profile Created');
-                document.getElementById("save-form").reset();
-                await getList();
-            }
-            else{
-                errorToast("Request fail !")
+                if(res.status===201){
+                    successToast('Rental is Created');
+                    document.getElementById("save-form").reset();
+                    await getList();
+                }
+                else{
+                    errorToast(res.data.msg)
+                }
             }
         }
     }

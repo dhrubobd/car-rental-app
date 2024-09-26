@@ -76,6 +76,7 @@ Route::post('/dashboard/update-car',[AdminCarController::class,'updateCar'])->mi
 // Rental Management Routes (Admin)
 Route::post('/dashboard/list-customer',[AdminRentalController::class,'listCustomer'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/list-available-car',[AdminRentalController::class,'listAvailableCar'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/create-rental',[AdminRentalController::class,'createRental'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/delete-rental',[AdminRentalController::class,'deleteRental'])->middleware([TokenVerificationMiddleware::class]);
 
 //User or Customer Car Routes (Frontend)

@@ -19,10 +19,12 @@ class RentalController extends Controller
         $endDate = $request->input('toDate');
         $bookingDays = $request->input('bookingDays');
         $count1 = Rental::where('car_id',$carID)
+        ->where('status','<>','cancelled')
         ->whereBetween('start_date',[$startDate, $endDate])->count();
         //return  response()->json(['msg' => "The Car is Booked for the date range", 'data' =>  $count1 ],200);
         
         $count2 = Rental::where('car_id',$carID)
+        ->where('status','<>','cancelled')
         ->whereBetween('end_date',[$startDate, $endDate])
         ->count();
         if(($count1==0)&&($count2==0)){
@@ -41,7 +43,7 @@ class RentalController extends Controller
                 'total_cost'=>$totalCost,
             ]);
         }else{
-            return  response()->json(['msg' => "The Car is Booked for the date range", 'data' =>  "Failed"],200);
+            return  response()->json(['msg' => "The Car Can Not Be Booked for the date range", 'data' =>  "Failed"],200);
         }
             
         //return  response()->json(['msg' => "Success", 'data' =>  "Okay"],200);

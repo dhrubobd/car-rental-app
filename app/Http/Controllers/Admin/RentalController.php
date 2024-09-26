@@ -32,6 +32,41 @@ class RentalController extends Controller
             ],200);
         }
     }
+
+    function createRental(Request $request){
+        $userID=$request->input('customerID');
+        $carID=$request->input('carID');
+        $startDate = $request->input('fromDate');
+        $endDate = $request->input('toDate');
+        $bookingDays = $request->input('bookingDays');
+        $count1 = Rental::where('car_id',$carID)
+        ->where('status','<>','cancelled')
+        ->whereBetween('start_date',[$startDate, $endDate])->count();
+        //return  response()->json(['msg' => "The Car is Booked for the date range", 'data' =>  $count1 ],200);
+        
+        $count2 = Rental::where('car_id',$carID)
+        ->where('status','<>','cancelled')
+        ->whereBetween('end_date',[$startDate, $endDate])
+        ->count();
+        if(($count1==0)&&($count2==0)){
+            $theCar = Car::where('id',$carID)->first();
+           
+            $dailyRent = $theCar->daily_rent_price;
+            
+            $totalCost = $bookingDays * $dailyRent;
+            
+           return Rental::create([
+                'user_id'=>$userID,
+                'car_id'=>$carID,
+                'start_date'=>$startDate,
+                'end_date'=>$endDate,
+                'status'=>'completed',
+                'total_cost'=>$totalCost,
+            ]);
+        }else{
+            return  response()->json(['msg' => "The Car Can Not be Booked for the date range", 'data' =>  "Failed"],200);
+        }
+    }
     function deleteRental(Request $request){
         if($this->isAdmin($request)){
             $rentalID=$request->input('id');
