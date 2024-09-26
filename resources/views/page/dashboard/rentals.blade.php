@@ -13,7 +13,7 @@
                             <h4>Rental Management</h4>
                         </div>
                         <div class="align-items-center col">
-                            <button data-bs-toggle="modal" data-bs-target="#create-modal" class="float-end btn m-0  bg-gradient-primary">Create</button>
+                            <button data-bs-toggle="modal" data-bs-target="#create-modal" class="float-end btn createBtn m-0  bg-gradient-primary">Create</button>
                         </div>
                     </div>
                     <hr class="bg-dark "/>
@@ -24,7 +24,7 @@
                                 <th>Rental ID</th>
                                 <th>Customer Name</th>
                                 <th>Car Details</th>
-                                <th>Rental Start Date</th>
+                                <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Total Cost</th>
                                 <th>Status</th>
@@ -50,9 +50,9 @@ getList();
     
     
         showLoader();
-        debugger;
+        //debugger;
         let res=await axios.post("/dashboard/rental-data");
-        console.info(res);
+        //console.info(res);
         hideLoader();
 
         let tableRentalList=$("#tableRentalList");
@@ -80,7 +80,9 @@ getList();
                      </tr>`;
             tableRentalList.append(row);
         })
-    
+        $('.createBtn').on('click', async function () {
+            await fillUpRentalDropdowns();
+        })
         $('.editBtn').on('click', async function () {
            let id= $(this).data('id');
            await FillUpUpdateForm(id)

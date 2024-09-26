@@ -25,6 +25,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //User Authentication Routes
+Route::get('/login', function () {
+    return view('page.auth.login-page');
+});
+Route::get('/registration', function () {
+    return view('page.auth.registration-page');
+});
 Route::post('/user-login',[AuthController::class,'userLogin']);
 Route::get('/logout',[AuthController::class,'userLogout']);
 Route::post('/user-registration',[AuthController::class,'userRegistration']);
@@ -33,13 +39,6 @@ Route::post('/user-registration',[AuthController::class,'userRegistration']);
 Route::get('/', function () {
     return view('page.home');
 });
-Route::get('/login', function () {
-    return view('page.auth.login-page');
-});
-Route::get('/registration', function () {
-    return view('page.auth.registration-page');
-});
-
 Route::get('/cars', function () {
     return view('page.customer.cars');
 })->middleware([TokenVerificationMiddleware::class]);
@@ -75,6 +74,8 @@ Route::post('/dashboard/car-by-id',[AdminCarController::class,'carByID'])->middl
 Route::post('/dashboard/update-car',[AdminCarController::class,'updateCar'])->middleware([TokenVerificationMiddleware::class]);
 
 // Rental Management Routes (Admin)
+Route::post('/dashboard/list-customer',[AdminRentalController::class,'listCustomer'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/list-available-car',[AdminRentalController::class,'listAvailableCar'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/delete-rental',[AdminRentalController::class,'deleteRental'])->middleware([TokenVerificationMiddleware::class]);
 
 //User or Customer Car Routes (Frontend)

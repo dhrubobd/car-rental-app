@@ -47,7 +47,7 @@ class PageController extends Controller
         }
     }
     function customerData(){
-        return User::where('role','customer')->orderBy('updated_at', 'desc')->get();; 
+        return User::where('role','customer')->orderBy('updated_at', 'desc')->get();
     }
 
     function manageCars(Request $request){

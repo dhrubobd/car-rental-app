@@ -10,20 +10,21 @@
                         <div class="row">
                             <div class="col-12 p-1">
 
-                                <label class="form-label mt-2">Name</label>
-                                <input type="text" class="form-control" id="customerName">
+                                <label class="form-label mt-2">Customer Name</label>
+                                <select type="text" class="form-control form-select" id="rentalCustomerName">
+                                    <option value="">Choose A Castomer</option>
+                                </select>
 
-                                <label class="form-label mt-2">Email</label>
-                                <input type="text" class="form-control" id="customerEmail">
+                                <label class="form-label mt-2">Car Details</label>
+                                <select type="text" class="form-control form-select" id="rentalCarName">
+                                    <option value="">Choose A Car</option>
+                                </select>
 
-                                <label class="form-label mt-2">Phone</label>
-                                <input type="text" class="form-control" id="customerPhone">
+                                <label class="form-label mt-2">Start Date</label>
+                                <input type="date" class="form-control" id="formDate">
 
-                                <label class="form-label mt-2">Address</label>
-                                <input type="text" class="form-control" id="customerAddress">
-
-                                <label class="form-label mt-2">Password</label>
-                                <input type="text" class="form-control" id="customerPassword">
+                                <label class="form-label mt-2">End Date</label>
+                                <input type="date" class="form-control" id="toDate">
                             </div>
                         </div>
                     </div>
@@ -31,7 +32,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="modal-close" class="btn bg-gradient-primary mx-2" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    <button onclick="Save()" id="save-btn" class="btn bg-gradient-success" >Save</button>
+                    <button onclick="saveRental()" id="save-btn" class="btn bg-gradient-success" >Save</button>
                 </div>
             </div>
     </div>
@@ -40,8 +41,20 @@
 
 <script>
 
+    async function fillUpRentalDropdowns(){
+        let res = await axios.post("/dashboard/list-customer");
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}</option>`
+            $("#rentalCustomerName").append(option);
+        })
+        let res2 = await axios.post("/dashboard/list-available-car");
+        res2.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}  - ${item['brand']} - ${item['car_type']}</option>`
+            $("#rentalCarName").append(option);
+        })
+    }
 
-    async function Save() {
+    async function saveRental() {
 
         let customerName = document.getElementById('customerName').value;
         let customerEmail = document.getElementById('customerEmail').value;

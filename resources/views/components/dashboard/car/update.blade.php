@@ -89,8 +89,6 @@
         }
     }
 
-
-
     async function updateCar() {
 
         let carNameUpdate=document.getElementById('carNameUpdate').value;
