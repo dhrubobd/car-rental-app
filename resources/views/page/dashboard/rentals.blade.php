@@ -81,17 +81,11 @@
             tableRentalList.append(row);
         })
         $('.createBtn').on('click', async function () {
-            $("#rentalCustomerID").find("option").remove();
-            $("#rentalCarID").find("option").remove();
-            let option=`<option value="">Choose A Car</option>`;
-            $("#rentalCustomerID").append(option);
-            option=`<option value="">Choose A Car</option>`;
-            $("#rentalCarID").append(option);
             await fillUpRentalDropdowns();
         })
         $('.editBtn').on('click', async function () {
            let id= $(this).data('id');
-           await FillUpUpdateForm(id)
+           await fillUpUpdateForm(id);
            $("#update-modal").modal('show');
         })
 
@@ -103,12 +97,6 @@
             $("#deleteID").val(id);
             $("#deleteFilePath").val(path)
 
-        })
-
-        $('.rentalHistoryBtn').on('click', async function () {
-           let id= $(this).data('id');
-           await showRentalDetails(id)
-           $("#rental-modal").modal('show');
         })
     
         new DataTable('#tableRentalData',{
@@ -132,7 +120,7 @@
             let option=`<option value="${item['id']}">${item['name']}</option>`
             $("#rentalCustomerID").append(option);
         })
-        
+
         let res2 = await axios.post("/dashboard/list-available-car");
         res2.data.forEach(function (item,i) {
             let option=`<option value="${item['id']}">${item['name']}  - ${item['brand']} - ${item['car_type']}</option>`

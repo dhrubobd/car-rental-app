@@ -152,12 +152,12 @@
             hideLoader();
 
             if(res.status===200 && res.data===1){
-                successToast('Car Information is Updateds');
+                successToast('Car Information is Updated');
                 document.getElementById("update-form").reset();
                 await getList();
             }
             else{
-                errorToast("Request fail !")
+                errorToast("Update Request fail !")
             }
         }
     }

@@ -67,6 +67,11 @@ class RentalController extends Controller
             return  response()->json(['msg' => "The Car Can Not be Booked for the date range", 'data' =>  "Failed"],200);
         }
     }
+
+    function rentalByID(Request $request){
+        $rentalID=$request->input('id');
+        return Rental::where('id',$rentalID)->first();
+    }
     function deleteRental(Request $request){
         if($this->isAdmin($request)){
             $rentalID=$request->input('id');
@@ -78,6 +83,21 @@ class RentalController extends Controller
             ],200);
         }
         
+    }
+    
+    function updateRental(Request $request){
+        if($this->isAdmin($request)){
+            $rentalID = $request->input('rentalID');
+            $rentalStatus = $request->input('rentalStatus');
+            return Rental::where('id',$rentalID)->update([
+                'status'=>$rentalStatus,
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Unautorized User'
+            ],200);
+        }
     }
 
     function isAdmin(Request $request){

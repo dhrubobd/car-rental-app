@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create A New Customer</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Create A New Rental</h5>
                 </div>
                 <div class="modal-body">
                     <form id="save-form">

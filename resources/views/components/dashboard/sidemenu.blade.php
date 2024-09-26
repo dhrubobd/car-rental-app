@@ -18,4 +18,9 @@
         <i class="bi bi-receipt"></i>
         <span class="side-bar-item-caption">Manage Rentals</span>
     </a>
+
+    <a href="{{url("/logout")}}" class="side-bar-item">
+        <i class="bi bi-box-arrow-left"></i>
+        <span class="side-bar-item-caption">Logout</span>
+    </a>
 </div>

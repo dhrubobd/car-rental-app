@@ -112,12 +112,12 @@
             hideLoader();
 
             if(res.status===200 && res.data===1){
-                successToast('Request completed');
+                successToast('The Customer Information is Updated');
                 document.getElementById("update-form").reset();
                 await getList();
             }
             else{
-                errorToast("Request fail !")
+                errorToast("Update Request fail !")
             }
         }
     }

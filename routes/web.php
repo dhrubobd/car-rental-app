@@ -78,6 +78,8 @@ Route::post('/dashboard/list-customer',[AdminRentalController::class,'listCustom
 Route::post('/dashboard/list-available-car',[AdminRentalController::class,'listAvailableCar'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/create-rental',[AdminRentalController::class,'createRental'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/delete-rental',[AdminRentalController::class,'deleteRental'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/rental-by-id',[AdminRentalController::class,'rentalByID'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/dashboard/update-rental',[AdminRentalController::class,'updateRental'])->middleware([TokenVerificationMiddleware::class]);
 
 //User or Customer Car Routes (Frontend)
 Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);

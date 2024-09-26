@@ -70,7 +70,7 @@ class CarController extends Controller
             $img_name="car-{$t}-{$file_name}";
             $img_url="uploads/{$img_name}";
 
-            // Upload Image File
+            // Upload Car Photo
             $img->move(public_path('uploads'),$img_name);
 
             // Delete Old File
@@ -78,7 +78,7 @@ class CarController extends Controller
             File::delete($filePath);
 
 
-            // Update Product
+            // Update Car
 
             return Car::where('id',$carID)->update([
                 'name'=>$request->input('carName'),

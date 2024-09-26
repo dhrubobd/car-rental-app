@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update The Customer Info</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update The Rental Info</h5>
             </div>
             <div class="modal-body">
                 <form id="update-form">
@@ -11,21 +11,26 @@
                             <div class="col-12 p-1">
 
 
-                                <label class="form-label mt-2">Name</label>
-                                <input type="text" class="form-control" id="customerNameUpdate">
+                                <label class="form-label mt-2">Customer Name</label>
+                                <select type="text" class="form-control form-select" id="rentalCustomerIDUpdate" disabled>
+                                </select>
 
-                                <label class="form-label mt-2">Email</label>
-                                <input type="text" class="form-control" id="customerEmailUpdate">
+                                <label class="form-label mt-2">Car Details</label>
+                                <select type="text" class="form-control form-select" id="rentalCarIDUpdate" disabled> 
+                                </select>
 
-                                <label class="form-label mt-2">Phone</label>
-                                <input type="text" class="form-control" id="customerPhoneUpdate">
+                                <label class="form-label mt-2">Start Date</label>
+                                <input type="date" class="form-control" id="fromDateUpdate" readonly>
 
-                                <label class="form-label mt-2">Address</label>
-                                <input type="text" class="form-control" id="customerAddressUpdate">
+                                <label class="form-label mt-2">End Date</label>
+                                <input type="date" class="form-control" id="toDateUpdate" readonly>
 
-                                <label class="form-label mt-2">Password</label>
-                                <input type="text" class="form-control" id="customerPasswordUpdate">
-
+                                <label class="form-label mt-2">Rental Status</label>
+                                <select type="text" class="form-control form-select" id="rentalStatusUpdate">
+                                    <option value="ongoing">ongoing</option>
+                                    <option value="completed">completed</option>
+                                    <option value="cancelled">cancelled</option>
+                                </select>
                                 <input type="text" class="d-none" id="updateID">
                             </div>
                         </div>
@@ -46,51 +51,50 @@
 <script>
 
 
-    async function FillUpUpdateForm(id){
+    async function fillUpUpdateForm(id){
 
+        $("#rentalCustomerIDUpdate").find("option").remove();
+        $("#rentalCarIDUpdate").find("option").remove();
+        
+        let res = await axios.post("/dashboard/list-customer");
+        res.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}</option>`
+            $("#rentalCustomerIDUpdate").append(option);
+        })
+        
+        let res2 = await axios.post("/dashboard/list-available-car");
+        res2.data.forEach(function (item,i) {
+            let option=`<option value="${item['id']}">${item['name']}  - ${item['brand']} - ${item['car_type']}</option>`
+            $("#rentalCarIDUpdate").append(option);
+        })
+        
         document.getElementById('updateID').value=id;
 
 
         showLoader();
         //debugger;
-        let res=await axios.post("/dashboard/customer-by-id",{id:id});
-        //console.info(res);
+        let res3=await axios.post("/dashboard/rental-by-id",{id:id});
+        //console.info(res3);
         hideLoader();
-
-        document.getElementById('customerNameUpdate').value=res.data['name'];
-        document.getElementById('customerEmailUpdate').value=res.data['email'];
-        document.getElementById('customerPhoneUpdate').value=res.data['phone'];
-        document.getElementById('customerAddressUpdate').value=res.data['address'];
-        document.getElementById('customerPasswordUpdate').value=res.data['password'];
-
+        
+        document.getElementById('rentalCustomerIDUpdate').value = res3.data['user_id'];
+        document.getElementById('rentalCarIDUpdate').value = res3.data['car_id'];
+        document.getElementById('fromDateUpdate').value=res3.data['start_date'];
+        document.getElementById('toDateUpdate').value=res3.data['end_date'];
+        document.getElementById('rentalStatusUpdate').value = res3.data['status'];
+        
     }
 
 
 
     async function update() {
 
-        let customerNameUpdate=document.getElementById('customerNameUpdate').value;
-        let customerEmailUpdate = document.getElementById('customerEmailUpdate').value;
-        let customerPhoneUpdate = document.getElementById('customerPhoneUpdate').value;
-        let customerAddressUpdate = document.getElementById('customerAddressUpdate').value;
-        let customerPasswordUpdate = document.getElementById('customerPasswordUpdate').value;
+        let rentalStatus = document.getElementById('rentalStatusUpdate').value;
         let updateID=document.getElementById('updateID').value;
 
 
-        if (customerNameUpdate.length === 0) {
-            errorToast("Customer Name Required !")
-        }
-        else if(customerEmailUpdate.length===0){
-            errorToast("Customer Email Required !")
-        }
-        else if(customerPhoneUpdate.length===0){
-            errorToast("Customer Phone Required !")
-        }
-        else if(customerAddressUpdate.length===0){
-            errorToast("Customer Address Required !")
-        }
-        else if(customerPasswordUpdate.length===0){
-            errorToast("Customer Password Required !")
+        if(rentalStatus.length===0){
+            errorToast("Rental Status is Required !")
         }
 
         else {
@@ -98,26 +102,22 @@
             document.getElementById('update-modal-close').click();
 
             let formData=new FormData();
-            formData.append('name',customerNameUpdate)
-            formData.append('id',updateID)
-            formData.append('email',customerEmailUpdate)
-            formData.append('phone',customerPhoneUpdate)
-            formData.append('address',customerAddressUpdate)
-            formData.append('password',customerPasswordUpdate)
-
-            
+            formData.append('rentalID',updateID)
+            formData.append('rentalStatus',rentalStatus)
 
             showLoader();
-            let res = await axios.post("/dashboard/update-customer",formData)
+            //debugger;
+            let res = await axios.post("/dashboard/update-rental",formData);
+            //console.info(res);
             hideLoader();
 
             if(res.status===200 && res.data===1){
-                successToast('Request completed');
+                successToast('Rental Status is Updated');
                 document.getElementById("update-form").reset();
                 await getList();
             }
             else{
-                errorToast("Request fail !")
+                errorToast("Update Request fail !")
             }
         }
     }
