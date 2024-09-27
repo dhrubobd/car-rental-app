@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'Harry Potter',
-                'email' => Str::random(10).'@example.com',
-                'password' => Str::random(7),
+                'email' => 'admin@admin.com',
+                'password' => 'admin',
                 'phone' => random_int(1000000000,9999999999),
                 'address' => fake()->sentence(10),
                 'role' => 'admin',
