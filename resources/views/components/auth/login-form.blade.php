@@ -43,7 +43,7 @@
                     if(res.data['role']==='admin'){
                         window.location.href="/dashboard";
                     }else{
-                        window.location.href="/cars";
+                        window.location.href="/customer-cars";
                     }
                     
                 }

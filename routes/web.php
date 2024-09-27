@@ -47,7 +47,7 @@ Route::get('/rentals', function () {
 });
 
 Route::get('/contact', function () {
-    return view('page.rentals');
+    return view('page.contact');
 });
 
 // Page Routes (Admin)

@@ -21,13 +21,13 @@
                                 <input type="text" class="form-control" id="carModelUpdate">
 
                                 <label class="form-label mt-2">Year of Manufacture</label>
-                                <input type="text" class="form-control" id="carYearUpdate">
+                                <input type="number" class="form-control" id="carYearUpdate">
 
                                 <label class="form-label mt-2">Car Type</label>
                                 <input type="text" class="form-control" id="carTypeUpdate">
 
                                 <label class="form-label mt-2">Rent Price</label>
-                                <input type="text" class="form-control" id="carRentPriceUpdate">
+                                <input type="number" class="form-control" id="carRentPriceUpdate">
 
                                 <label class="form-label mt-2">Availability Status</label>
                                 <select type="text" class="form-control form-select" id="carAvailabilityUpdate">

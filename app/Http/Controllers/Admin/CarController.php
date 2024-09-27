@@ -29,7 +29,7 @@ class CarController extends Controller
             }else{
                 $carAvailability = false;
             }
-
+            
             // Save To Database
             return Car::create([
                 'name'=>$request->input('carName'),

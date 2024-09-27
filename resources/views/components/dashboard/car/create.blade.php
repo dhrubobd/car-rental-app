@@ -20,13 +20,13 @@
                                 <input type="text" class="form-control" id="carModel">
 
                                 <label class="form-label mt-2">Year of Manufacture</label>
-                                <input type="text" class="form-control" id="carYear">
+                                <input type="number" class="form-control" id="carYear">
 
                                 <label class="form-label mt-2">Car Type</label>
                                 <input type="text" class="form-control" id="carType">
 
                                 <label class="form-label mt-2">Rent Price</label>
-                                <input type="text" class="form-control" id="carRentPrice">
+                                <input type="number" class="form-control" id="carRentPrice">
 
                                 <label class="form-label mt-2">Availability Status</label>
                                 <select type="text" class="form-control form-select" id="carAvailability">
@@ -110,9 +110,9 @@
             }
 
             showLoader();
-            //debugger;
+            debugger;
             let res = await axios.post("/dashboard/create-car",formData,config);
-            //console.info(res);
+            console.info(res);
             hideLoader();
 
             if(res.status===201){

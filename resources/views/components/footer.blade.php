@@ -4,10 +4,10 @@
             <img class="img-fluid"src="{{asset('images/logo.png')}}" alt="" width="96px">
         </a>
         <ul class="d-flex flex-wrap justify-content-center align-items-center list-unstyled mb-4">
-            <li><a class="link-secondary me-4" href="#">Home</a></li>
-            <li><a class="link-secondary me-4" href="#">About</a></li>
-            <li><a class="link-secondary me-4" href="#">Rentals</a></li>
-            <li><a class="link-secondary" href="#">Contact</a></li>
+            <li><a class="link-secondary me-4" href="/">Home</a></li>
+            <li><a class="link-secondary me-4" href="/about">About</a></li>
+            <li><a class="link-secondary me-4" href="/rentals">Rentals</a></li>
+            <li><a class="link-secondary" href="/contact">Contact</a></li>
         </ul>
         <div>
             <a class="d-inline-block me-4" href="#">

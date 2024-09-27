@@ -48,7 +48,7 @@ class RentalController extends Controller
                 $dailyRent = $theCar->daily_rent_price;
                 
                 $totalCost = $bookingDays * $dailyRent;
-                
+               
             return Rental::create([
                     'user_id'=>$userID,
                     'car_id'=>$carID,
