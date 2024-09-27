@@ -27,11 +27,11 @@
             let res=await axios.post("/dashboard/delete-car",{id:id,file_path:deleteFilePath})
             hideLoader();
             if(res.data===1){
-                successToast("The Car is Deleted")
+                successToast("The Car Profile is Deleted")
                 await getList();
             }
             else{
-                errorToast("Request fail!")
+                errorToast("Delete Request fail!")
             }
      }
 </script>

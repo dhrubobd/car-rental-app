@@ -14,16 +14,15 @@ class CustomerController extends Controller
 {
 
     function createCustomer(Request $request){
-        //return $request->all();
-        $userID=$request->header('id');
-        $theUser= User::where('id','=',$userID)
-             ->select(['role'])->first();
-        if($theUser->role=="admin"){
+        if($this->isAdmin($request)==true){
+            //return $request->all();
+            
             $customerName=$request->input('customerName');
             $customerEmail = $request->input('customerEmail');
             $customerPhone = $request->input('customerPhone');
             $customerAddress = $request->input('customerAddress');
             $customerPassword = $request->input('customerPassword');
+
             try {
                 return User::create([
                     'name'=>$customerName,
@@ -33,24 +32,21 @@ class CustomerController extends Controller
                     'password'=>$customerPassword,
                     'role'=>'customer'
                 ]);
-            } catch (\Throwable $th) {
-                return  response()->json(['msg' => "Customer is not created", 'data' =>  "Failed"],200);
-            }
+                } catch (\Throwable $th) {
+                    return  response()->json(['msg' => "Customer is not created", 'data' =>  "Failed"],200);
+                }
         }else{
             return view('page.auth.login-page');
         }
     }
 
     function deleteCustomer(Request $request){
-        $userID=$request->header('id');
-        $theUser= User::where('id','=',$userID)
-             ->select(['role'])->first();
-        if($theUser->role=="admin"){
+        if($this->isAdmin($request)==true){
             $customerID = $request->input('id');
             try {
                 return User::where('id',$customerID)->delete();
             } catch (\Throwable $th) {
-                //throw $th;
+                return  response()->json(['msg' => "Customer is not Deleted", 'data' =>  "Failed"],200);
             }
         }else{
             return view('page.auth.login-page');
@@ -58,10 +54,7 @@ class CustomerController extends Controller
     }
 
     function customerByID(Request $request){
-        $userID=$request->header('id');
-        $theUser= User::where('id','=',$userID)
-             ->select(['role'])->first();
-        if($theUser->role=="admin"){
+        if($this->isAdmin($request)==true){
             $customerID=$request->input('id');
             return User::where('id',$customerID)->first();
         }else{
@@ -70,10 +63,7 @@ class CustomerController extends Controller
         
     }
     function updateCustomer(Request $request){
-        $userID=$request->header('id');
-        $theUser= User::where('id','=',$userID)
-             ->select(['role'])->first();
-        if($theUser->role=="admin"){
+        if($this->isAdmin($request)==true){
             $customerID=$request->input('id');
             $customerName = $request->input('name');
             $customerEmail = $request->input('email');
@@ -93,14 +83,22 @@ class CustomerController extends Controller
         }
     }
     function customerRentals(Request $request){
-        $userID=$request->header('id');
-        $theUser= User::where('id','=',$userID)
-             ->select(['role'])->first();
-        if($theUser->role=="admin"){
+        if($this->isAdmin($request)==true){
             $customerID = $request->input('id');
             return Rental::where('user_id',$customerID)->get();
         }else{
             return view('page.auth.login-page');
+        }
+    }
+
+    function isAdmin(Request $request){
+        $userID = $request->header('id');
+        $theUser= User::where('id','=',$userID)
+             ->select(['role'])->first();
+        if($theUser->role=="admin"){
+            return true;
+        }else{
+            return false;
         }
     }
 }

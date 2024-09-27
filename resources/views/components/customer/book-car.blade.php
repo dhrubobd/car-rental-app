@@ -23,7 +23,6 @@
                 <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 <button onclick="bookCar()" id="update-btn" class="btn bg-gradient-success" >Confirm</button>
             </div>
-
         </div>
     </div>
 </div>
@@ -40,7 +39,6 @@ async function bookCar(){
     let fromDate = document.getElementById('formDate').value;
     let toDate = document.getElementById('toDate').value;
     
-    //alert(present_date.getTime());
     if(fromDate.length === 0){
         errorToast("From Date Can't be empty!");
     }else if(toDate.length === 0){
@@ -68,7 +66,7 @@ async function bookCar(){
             //console.info(res);
             hideLoader();
             if(res.status===201){
-                successToast('Request completed');
+                successToast('Car Booking Success!');
                 window.location.href="/manage-bookings";
             }
             else{

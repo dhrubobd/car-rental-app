@@ -9,8 +9,6 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-
-
                                 <label class="form-label mt-2">Name</label>
                                 <input type="text" class="form-control" id="customerNameUpdate">
 
@@ -117,7 +115,7 @@
                 await getList();
             }
             else{
-                errorToast("Update Request fail !")
+                errorToast("Update Request failed !")
             }
         }
     }

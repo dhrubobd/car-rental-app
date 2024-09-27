@@ -157,7 +157,7 @@
                 await getList();
             }
             else{
-                errorToast("Update Request fail !")
+                errorToast("Update Request failed !")
             }
         }
     }

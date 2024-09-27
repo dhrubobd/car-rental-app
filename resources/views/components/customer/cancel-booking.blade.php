@@ -43,13 +43,13 @@ async function cancelBooking(){
             //console.info(res);
             hideLoader();
             if(res.status===200 && res.data===1){
-                successToast('Request completed');
+                successToast('Cancel Booking Request completed');
                 //window.location.href="/manage-bookings";
                 document.getElementById('cancel-modal-close').click();
                 await getList();
             }
             else{
-                errorToast('Failed');
+                errorToast('Cancel Booking Failed');
             }
 }
 </script>

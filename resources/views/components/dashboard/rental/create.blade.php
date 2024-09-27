@@ -70,7 +70,6 @@
             } 
             else 
             {
-                
                 document.getElementById('modal-close').click();
                 bookingDays = bookingDays + 1;
                 let formData=new FormData();

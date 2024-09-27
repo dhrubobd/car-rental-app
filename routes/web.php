@@ -35,17 +35,20 @@ Route::post('/user-login',[AuthController::class,'userLogin']);
 Route::get('/logout',[AuthController::class,'userLogout']);
 Route::post('/user-registration',[AuthController::class,'userRegistration']);
 
-// Page Routes (Customer)
+// Page Routes (Frontend - Static Pages)
 Route::get('/', function () {
     return view('page.home');
 });
-Route::get('/cars', function () {
-    return view('page.customer.cars');
-})->middleware([TokenVerificationMiddleware::class]);
+Route::get('/about', function () {
+    return view('page.about');
+});
+Route::get('/rentals', function () {
+    return view('page.rentals');
+});
 
-Route::get('/manage-bookings', function () {
-    return view('page.customer.manage-bookings');
-})->middleware([TokenVerificationMiddleware::class]);
+Route::get('/contact', function () {
+    return view('page.rentals');
+});
 
 // Page Routes (Admin)
 Route::get('/dashboard',[AdminPageController::class,'dashboardView'])->middleware([TokenVerificationMiddleware::class]);
@@ -81,10 +84,15 @@ Route::post('/dashboard/delete-rental',[AdminRentalController::class,'deleteRent
 Route::post('/dashboard/rental-by-id',[AdminRentalController::class,'rentalByID'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/dashboard/update-rental',[AdminRentalController::class,'updateRental'])->middleware([TokenVerificationMiddleware::class]);
 
+
+// Page Routes (Customer)
+Route::get('/customer-cars',[PageController::class,'customerCarsView'])->middleware([TokenVerificationMiddleware::class]);
+Route::get('/manage-bookings',[PageController::class,'manageBookingView'])->middleware([TokenVerificationMiddleware::class]);
+
 //User or Customer Car Routes (Frontend)
 Route::get('/list-cars',[CarController::class,'carList'])->middleware([TokenVerificationMiddleware::class]);
 
 //User or Customer Rental Routes (Frontend)
-Route::post('/book-car',[RentalController::class,'bookCar'])->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-bookings',[RentalController::class,'bookingList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/book-car',[RentalController::class,'bookCar'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/cancel-booking',[RentalController::class,'cancelBooking'])->middleware([TokenVerificationMiddleware::class]);

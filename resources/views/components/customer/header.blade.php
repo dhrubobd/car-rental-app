@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="header01">
             <ul class="navbar-nav ms-auto mt-3 mt-lg-0 mb-3 mb-lg-0 me-4">
                 <li class="nav-item me-4"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item me-4"><a class="nav-link" href="/cars">Cars</a></li>
+                <li class="nav-item me-4"><a class="nav-link" href="/customer-cars">Cars</a></li>
                 <li class="nav-item me-4"><a class="nav-link" href="/manage-bookings">Rentals</a></li>
                 <li class="nav-item me-4"><a class="nav-link" href="/contact">Contact</a></li>
             </ul>

@@ -27,7 +27,7 @@
             let res=await axios.post("/dashboard/delete-customer",{id:id,file_path:deleteFilePath})
             hideLoader();
             if(res.data===1){
-                successToast("The User is Deleted.")
+                successToast("The Customer is Deleted.")
                 await getList();
             }
             else{

@@ -21,15 +21,16 @@ class RentalController extends Controller
         $startDate = $request->input('fromDate');
         $endDate = $request->input('toDate');
         $bookingDays = $request->input('bookingDays');
+
         $count1 = Rental::where('car_id',$carID)
         ->where('status','<>','cancelled')
         ->whereBetween('start_date',[$startDate, $endDate])->count();
-        //return  response()->json(['msg' => "The Car is Booked for the date range", 'data' =>  $count1 ],200);
         
         $count2 = Rental::where('car_id',$carID)
         ->where('status','<>','cancelled')
         ->whereBetween('end_date',[$startDate, $endDate])
         ->count();
+
         if(($count1==0)&&($count2==0)){
             $theCar = Car::where('id',$carID)->first();
            
@@ -61,19 +62,18 @@ class RentalController extends Controller
         }else{
             return  response()->json(['msg' => "The Car Can Not Be Booked for the date range", 'data' =>  "Failed"],200);
         }
-            
-        //return  response()->json(['msg' => "Success", 'data' =>  "Okay"],200);
-     
     }
 
     function bookingList(Request $request){
         $userID=$request->header('id');
+        
         return Rental::where('user_id',$userID)->get();
     }
 
     function cancelBooking(Request $request){
         $userID=$request->header('id');
         $bookingID=$request->input('bookingID');
+
         return Rental::where('id',$bookingID)->where('user_id',$userID)
             ->update([
                 'status'=>'cancelled'

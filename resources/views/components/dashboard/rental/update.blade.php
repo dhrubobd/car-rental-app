@@ -9,8 +9,6 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
-
-
                                 <label class="form-label mt-2">Customer Name</label>
                                 <select type="text" class="form-control form-select" id="rentalCustomerIDUpdate" disabled>
                                 </select>
@@ -37,12 +35,10 @@
                     </div>
                 </form>
             </div>
-
             <div class="modal-footer">
                 <button id="update-modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
                 <button onclick="update()" id="update-btn" class="btn bg-gradient-success" >Update</button>
             </div>
-
         </div>
     </div>
 </div>
