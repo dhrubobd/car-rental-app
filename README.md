@@ -13,5 +13,9 @@ Follow the steps below to set up the project:
 - Run php artisan key:generate
 - Set your database credentials in the .env file
 - Set your mail credentials in the .env file
-- Run php artisan migrate or You can download Database.sql.zip file from Root folder and import the data into your MySQL database.
+- Run php artisan migrate:refresh --seed or You can download Database.sql.zip file from Root folder and import the data into your MySQL database.
 - Run php artisan serve to start the test server
+
+## Admin Login Access
+**Email:** admin@admin.com
+**Password:** admin
